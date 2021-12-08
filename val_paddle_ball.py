@@ -1,13 +1,13 @@
 import numpy as np
 from keras.models import Sequential
 from keras.layers.core import Dense
-from keras.optimizers import sgd
+from keras.optimizers import SGD
 import pygame
 from train_paddle_ball import PaddleBall
 
 
 if __name__ == "__main__":
-    epoch = 1
+    epoch = 5
     # Game screen width units
     window_w = 12
     # Game screen hight units
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     model.add(Dense(hidden_size, activation="relu"))
     model.add(Dense(num_actions))
     # Optimizer used is Stochastic Gradient Descent with loss function Mean Squared Error.
-    model.compile(sgd(lr=.2), "mse")
+    model.compile(SGD(lr=.2), "mse")
 
     model.load_weights("model.h5")
 

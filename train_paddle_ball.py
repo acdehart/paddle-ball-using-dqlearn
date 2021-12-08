@@ -2,7 +2,7 @@ import json
 import numpy as np
 from keras.models import Sequential
 from keras.layers.core import Dense
-from keras.optimizers import sgd
+from keras.optimizers import SGD
 import pygame
 
 class PaddleBall(object):
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     # Exploration probability
     epsilon = .1  
     # Number of times to play game for training
-    epoch = 1000
+    epoch = 30
     # Memory for Experience Replay
     max_memory = 1000
     # Batch size to train with Experience Replay
@@ -166,7 +166,7 @@ if __name__ == "__main__":
     model.add(Dense(hidden_size, activation="relu"))
     model.add(Dense(num_actions))
     # Optimizer used is Stochastic Gradient Descent with loss function Mean Squared Error.
-    model.compile(sgd(lr=.2), "mse")
+    model.compile(SGD(learning_rate=.2), "mse")
 
     # To continue training a previous model, uncomment the following line.
     #model.load_weights("model.h5")
@@ -199,8 +199,8 @@ if __name__ == "__main__":
         # Get initial input
         input_t = env.get_state()
         # Save state to text file.
-        #with open("canvas.txt","ab") as f_handle:
-        #    np.savetxt(f_handle, input_t.reshape(window_h,window_w), fmt="%i")
+        with open("canvas.txt","ab") as f_handle:
+           np.savetxt(f_handle, input_t.reshape(window_h,window_w), fmt="%i")
         
         while not game_over:
 #==============================================================================
@@ -224,8 +224,8 @@ if __name__ == "__main__":
                     reward = env.take_action(action)
                     game_over = env.game_over
                     input_t = env.get_state()
-                    #with open("canvas.txt","ab") as f_handle:
-                    #    np.savetxt(f_handle, input_t.reshape(window_h,window_w), fmt="%i")
+                    with open("canvas.txt", "ab") as f_handle:
+                       np.savetxt(f_handle, input_t.reshape(window_h,window_w), fmt="%i")
                     if reward == 1:
                         win_cnt += 1
         
